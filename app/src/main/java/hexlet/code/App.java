@@ -2,7 +2,7 @@ package hexlet.code;
 
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinJte;
-import lombok.extern.slf4j.Slf4j;
+//import lombok.extern.slf4j.Slf4j;
 
 public class App {
 
@@ -22,7 +22,7 @@ public class App {
 
     private static int getPort() {
         String port = System.getenv().getOrDefault("PORT", "7071");
-        return Integer.valueOf(port);
+        return Integer.parseInt(port);
     }
     //@Slf4j
     /*public class HelloWorld {
