@@ -20,6 +20,8 @@ dependencies {
     implementation("io.javalin:javalin:6.2.0")
     implementation("gg.jte:jte:3.1.12")
     implementation("io.javalin:javalin-rendering:6.1.6")
+    implementation("com.zaxxer:HikariCP:5.1.0")
+    implementation("com.h2database:h2:2.2.224")
     testImplementation(platform("org.junit:junit-bom:5.11.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 
