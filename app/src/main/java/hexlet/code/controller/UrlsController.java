@@ -12,7 +12,6 @@ import io.javalin.http.NotFoundResponse;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 
 import static io.javalin.rendering.template.TemplateUtil.model;
 

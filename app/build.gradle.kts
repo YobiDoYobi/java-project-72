@@ -4,6 +4,7 @@ plugins {
     jacoco
     id("io.freefair.lombok") version "8.6"
     id("com.github.johnrengelman.shadow") version "8.1.1"
+    id("checkstyle")
 
 }
 application {
@@ -29,7 +30,7 @@ dependencies {
     testImplementation("org.assertj:assertj-core:3.26.3")
     testImplementation(platform("org.junit:junit-bom:5.11.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
-
+    implementation("com.puppycrawl.tools:checkstyle:10.14.2")
 }
 
 tasks.test {
