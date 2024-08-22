@@ -50,10 +50,6 @@ tasks.jacocoTestReport {
     }
 }
 
-jacoco {
-    toolVersion = "0.8.12"
-    reportsDirectory = layout.buildDirectory.dir("customJacocoReportDir")
-}
 
 tasks.jacocoTestCoverageVerification {
     violationRules {
