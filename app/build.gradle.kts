@@ -1,8 +1,10 @@
 plugins {
     //id("java")
     application
+    jacoco
     id("io.freefair.lombok") version "8.6"
     id("com.github.johnrengelman.shadow") version "8.1.1"
+
 }
 application {
     mainClass.set("hexlet.code.App")
@@ -10,6 +12,7 @@ application {
 
 group = "hexlet.code"
 version = "1.0-SNAPSHOT"
+
 
 repositories {
     mavenCentral()
@@ -23,6 +26,7 @@ dependencies {
     implementation("io.javalin:javalin-bundle:6.2.0")
     implementation("com.zaxxer:HikariCP:5.1.0")
     implementation("com.h2database:h2:2.2.224")
+    testImplementation("org.assertj:assertj-core:3.26.3")
     testImplementation(platform("org.junit:junit-bom:5.11.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 
@@ -30,4 +34,44 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+    finalizedBy(tasks.jacocoTestReport) // report is always generated after tests run
+}
+
+tasks.withType<JavaCompile> {
+    options.encoding = "UTF-8"
+}
+
+tasks.jacocoTestReport {
+    reports {
+        xml.required.set(true)
+        html.outputLocation = layout.buildDirectory.dir("jacocoHtml")
+        dependsOn(tasks.test) // tests are required to run before generating the report
+    }
+}
+
+jacoco {
+    toolVersion = "0.8.12"
+    reportsDirectory = layout.buildDirectory.dir("customJacocoReportDir")
+}
+
+tasks.jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = "0.5".toBigDecimal()
+            }
+        }
+
+        rule {
+            isEnabled = false
+            element = "CLASS"
+            includes = listOf("org.gradle.*")
+
+            limit {
+                counter = "LINE"
+                value = "TOTALCOUNT"
+                maximum = "0.3".toBigDecimal()
+            }
+        }
+    }
 }

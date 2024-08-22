@@ -1,17 +1,58 @@
-<!-- Изменения HTML в шаблоне не требуют перезапуска сервера -->
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Hello Hexlet!</title>
-</head>
-<body>
-<div class="col-lg-8 mx-auto p-4 py-md-5">
-    <main>
-        <h1 class="text-body-emphasis">Привет, Хекслет!</h1>
-        <p>Javalin + jte</p>
+@import hexlet.code.util.NamedRoutes
+@import hexlet.code.dto.UrlsPage
+@param UrlsPage page
+
+@template.layout(
+page = page,
+content = @`
+    <main class="flex-grow-1">
+
+        @if(page != null && page.getFlash() != null)
+        <%--<p>${page.getFlash()}</p>--%>
+            <div class="rounded-0 m-0 alert alert-dismissible fade show alert-success" role="alert">
+                <p class="m-0">${page.getFlash()}</p>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
+
+        <section>
+
+            <div class="container-lg mt-5">
+                <h1>Сайты</h1>
+
+                <table class="table table-bordered table-hover mt-3">
+                    <thead>
+                    <tr>
+                        <th class="col-1">ID</th>
+                        <th>Имя</th>
+                        <th class="col-2">Последняя проверка</th>
+                        <th class="col-1">Код ответа</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    @for(var url : page.getUrls())
+                        <tr>
+                            <td>
+                                ${url.getId()}
+                            </td>
+                            <td>
+                                <a href="${NamedRoutes.urlPath(url.getId())}">${url.getName()}</a>
+                            </td>
+                            <td>
+
+                            </td>
+                            <td>
+
+                            </td>
+                        </tr>
+                    @endfor
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
     </main>
-</div>
-</body>
-</html>
+`
+)
