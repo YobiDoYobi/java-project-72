@@ -13,4 +13,10 @@ public class NamedRoutes {
     public static String mainPath() {
         return "/";
     }
+    public static String runCheckPath(String urlId) {
+        return urlsPath() + urlId + "/checks";
+    }
+    public static String runCheckPath(Long urlId) {
+        return urlsPath() + urlId + "/checks";
+    }
 }

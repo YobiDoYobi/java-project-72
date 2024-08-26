@@ -1,3 +1,6 @@
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.gradle.api.tasks.testing.logging.TestLogEvent
+
 plugins {
     //id("java")
     application
@@ -31,6 +34,13 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:5.11.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     implementation("com.puppycrawl.tools:checkstyle:10.14.2")
+    implementation("com.konghq:unirest-java:4.0.0-RC2")
+    compileOnly("com.konghq:unirest-java-core:4.4.4")
+    testImplementation("com.konghq:unirest-object-mappers-gson:4.2.9")
+    implementation("com.konghq:unirest-objectmapper-jackson:4.2.9")
+    implementation ("org.jsoup:jsoup:1.18.1")
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.12.0")
+    implementation("org.postgresql:postgresql:42.7.3")
 }
 
 tasks.test {

@@ -5,14 +5,6 @@
 page = page,
 content = @`
     <main class="flex-grow-1">
-        @if(page != null && page.getFlash() != null)
-        <%--<p>${page.getFlash()}</p>--%>
-            <div class="rounded-0 m-0 alert alert-dismissible fade show alert-danger" role="alert">
-                <p class="m-0">${page.getFlash()}</p>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
-
         <section>
 
             <div class="container-fluid bg-dark p-5">

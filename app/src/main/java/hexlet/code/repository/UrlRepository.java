@@ -70,11 +70,11 @@ public class UrlRepository extends BaseRepository {
                 var id = resultSet.getLong("id");
                 var name = resultSet.getString("name");
                 var createdAt = resultSet.getTimestamp("created_at").toLocalDateTime();
-
-                var car = new Url(name, createdAt);
-                car.setId(id);
-                car.setCreatedAt(createdAt);
-                result.add(car);
+                var url = new Url(name, createdAt);
+                url.setId(id);
+                url.setCreatedAt(createdAt);
+                url.setLastCheck(UrlCheckRepository.getLastCheck(id).orElse(null));
+                result.add(url);
             }
             return result;
         }

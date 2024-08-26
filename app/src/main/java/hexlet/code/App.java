@@ -2,26 +2,27 @@ package hexlet.code;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import gg.jte.ContentType;
-import gg.jte.TemplateEngine;
-import gg.jte.resolve.ResourceCodeResolver;
 import hexlet.code.controller.UrlsController;
 import hexlet.code.repository.BaseRepository;
 import hexlet.code.util.NamedRoutes;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinJte;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.sql.SQLException;
-import java.util.stream.Collectors;
-
 import lombok.extern.slf4j.Slf4j;
+
+import java.io.IOException;
+import java.sql.SQLException;
+
+import static hexlet.code.util.Utils.createTemplateEngine;
+import static hexlet.code.util.Utils.getPort;
+import static hexlet.code.util.Utils.readResourceFile;
+
 
 @Slf4j
 public class App {
+    public static void main(String[] args) throws IOException, SQLException {
+        Javalin app = getApp();
+        app.start(getPort());
+    }
 
     public static Javalin getApp() throws IOException, SQLException {
         var hikariConfig = new HikariConfig();
@@ -46,32 +47,7 @@ public class App {
         app.get(NamedRoutes.urlsPath(), UrlsController::index);
         app.post(NamedRoutes.urlsPath(), UrlsController::create);
         app.get(NamedRoutes.urlPath("{id}"), UrlsController::show);
+        app.post(NamedRoutes.runCheckPath("{id}"), UrlsController::checkUrl);
         return app;
     }
-
-    public static void main(String[] args) throws IOException, SQLException {
-        Javalin app = getApp();
-        app.start(getPort());
-    }
-
-    private static int getPort() {
-        String port = System.getenv().getOrDefault("PORT", "7071");
-        return Integer.parseInt(port);
-    }
-
-    private static String readResourceFile(String fileName) throws IOException {
-        var inputStream = App.class.getClassLoader().getResourceAsStream(fileName);
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
-            return reader.lines().collect(Collectors.joining("\n"));
-        }
-    }
-
-    private static TemplateEngine createTemplateEngine() {
-        ClassLoader classLoader = App.class.getClassLoader();
-        ResourceCodeResolver codeResolver = new ResourceCodeResolver("templates", classLoader);
-        TemplateEngine templateEngine = TemplateEngine.create(codeResolver, ContentType.Html);
-        return templateEngine;
-    }
 }
-
-//pr2711.com

@@ -6,11 +6,10 @@
 page = page,
 content = @`
     <main class="flex-grow-1">
-
         <section>
 
             <div class="container-lg mt-5">
-                <h1>Сайт: https://java-page-analyzer-ru.hexlet.app</h1>
+                <h1>Сайт: ${page.getUrl().getName()}</h1>
 
                 <table class="table table-bordered table-hover mt-3">
                     <tbody>
@@ -30,7 +29,7 @@ content = @`
                 </table>
 
                 <h2 class="mt-5">Проверки</h2>
-                <form method="post" action="/urls/1/checks">
+                <form method="post" action="${NamedRoutes.runCheckPath(page.getUrl().getId())}">
                     <button type="submit" class="btn btn-primary">Запустить проверку</button>
                 </form>
 
@@ -46,7 +45,28 @@ content = @`
                     </tr>
                     </thead>
                     <tbody>
-
+                    @for(var check : page.getChecks())
+                        <tr>
+                            <td>
+                                ${check.getId()}
+                            </td>
+                            <td>
+                                ${check.getStatusCode()}
+                            </td>
+                            <td>
+                                ${check.getTitle()}
+                            </td>
+                            <td>
+                                ${check.getH1()}
+                            </td>
+                            <td>
+                                ${check.getDescription()}
+                            </td>
+                            <td>
+                                ${check.getCreatedAt().toString()}
+                            </td>
+                        </tr>
+                    @endfor
                     </tbody>
                 </table>
             </div>

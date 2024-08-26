@@ -7,7 +7,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Анализатор страниц</title>
@@ -33,6 +33,19 @@
         </div>
     </div>
 </nav>
+@if(page != null && page.getType() != null)
+    @if(page.getType().equals("Success"))
+        <div class="rounded-0 m-0 alert alert-dismissible fade show alert-success" role="alert">
+            <p class="m-0">${page.getMessage()}</p>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @elseif(page.getType().equals("Error"))
+        <div class="rounded-0 m-0 alert alert-dismissible fade show alert-danger" role="alert">
+            <p class="m-0">${page.getMessage()}</p>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+@endif
 
 ${content}
 <footer class="footer border-top py-3 mt-5 bg-light">

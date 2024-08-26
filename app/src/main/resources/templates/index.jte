@@ -6,21 +6,9 @@
 page = page,
 content = @`
     <main class="flex-grow-1">
-
-        @if(page != null && page.getFlash() != null)
-        <%--<p>${page.getFlash()}</p>--%>
-            <div class="rounded-0 m-0 alert alert-dismissible fade show alert-success" role="alert">
-                <p class="m-0">${page.getFlash()}</p>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
-
-
         <section>
-
             <div class="container-lg mt-5">
                 <h1>Сайты</h1>
-
                 <table class="table table-bordered table-hover mt-3">
                     <thead>
                     <tr>
@@ -41,9 +29,14 @@ content = @`
                                 <a href="${NamedRoutes.urlPath(url.getId())}">${url.getName()}</a>
                             </td>
                             <td>
-
+                                @if(url.getLastCheck() != null)
+                                    ${url.getLastCheck().getCreatedAt().toString()}
+                                @endif
                             </td>
                             <td>
+                                @if(url.getLastCheck() != null)
+                                    ${url.getLastCheck().getStatusCode()}
+                                @endif
 
                             </td>
                         </tr>
@@ -51,7 +44,6 @@ content = @`
                     </tbody>
                 </table>
             </div>
-
         </section>
     </main>
 `
