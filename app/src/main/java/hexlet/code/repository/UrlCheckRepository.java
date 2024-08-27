@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public class UrlCheckRepository extends BaseRepository {
     public static void save(UrlCheck urlCheck) throws SQLException {
-        var sql = "INSERT INTO url_checks (urlId, statusCode, title, h1, description, created_at) "
+        var sql = "INSERT INTO url_checks (url_id, status_code, title, h1, description, created_at) "
                 + "VALUES (?, ?, ?, ?, ?, ?)";
 
         try (var conn = dataSource.getConnection();
@@ -36,7 +36,7 @@ public class UrlCheckRepository extends BaseRepository {
     }
 
     public static List<UrlCheck> getEntities(Long urlId) throws SQLException {
-        var sql = "SELECT * FROM url_checks WHERE urlId = ?";
+        var sql = "SELECT * FROM url_checks WHERE url_id = ?";
         try (var conn = dataSource.getConnection();
              var stmt = conn.prepareStatement(sql)) {
             stmt.setLong(1, urlId);
@@ -45,7 +45,7 @@ public class UrlCheckRepository extends BaseRepository {
             while (resultSet.next()) {
                 var id = resultSet.getLong("id");
                 //var urlId = resultSet.getLong("urlId");
-                var statusCode = resultSet.getInt("statusCode");
+                var statusCode = resultSet.getInt("status_code");
                 var title = resultSet.getString("title");
                 var h1 = resultSet.getString("h1");
                 var description = resultSet.getString("description");
@@ -58,8 +58,8 @@ public class UrlCheckRepository extends BaseRepository {
     }
 
     public static Optional<UrlCheck> getLastCheck(Long urlId) throws SQLException {
-        var sql = "SELECT * FROM url_checks WHERE urlId = ? "
-                + "AND id = (SELECT MAX(id) FROM url_checks WHERE urlId = ?)";
+        var sql = "SELECT * FROM url_checks WHERE url_id = ? "
+                + "AND id = (SELECT MAX(id) FROM url_checks WHERE url_id = ?)";
         try (var conn = dataSource.getConnection();
              var stmt = conn.prepareStatement(sql)) {
             stmt.setLong(1, urlId);
@@ -69,7 +69,7 @@ public class UrlCheckRepository extends BaseRepository {
             if (resultSet.next()) {
                 var urlCheckTemp = new UrlCheck();
                 urlCheckTemp.setId(resultSet.getLong("id"));
-                urlCheckTemp.setStatusCode(resultSet.getInt("statusCode"));
+                urlCheckTemp.setStatusCode(resultSet.getInt("status_code"));
                 urlCheckTemp.setTitle(resultSet.getString("title"));
                 urlCheckTemp.setH1(resultSet.getString("h1"));
                 urlCheckTemp.setDescription(resultSet.getString("description"));

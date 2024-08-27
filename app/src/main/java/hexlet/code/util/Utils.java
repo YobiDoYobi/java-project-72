@@ -27,7 +27,6 @@ public class Utils {
     public static TemplateEngine createTemplateEngine() {
         ClassLoader classLoader = App.class.getClassLoader();
         ResourceCodeResolver codeResolver = new ResourceCodeResolver("templates", classLoader);
-        return TemplateEngine.create(
-                new ResourceCodeResolver("templates", App.class.getClassLoader()), ContentType.Html);
+        return TemplateEngine.create(codeResolver, ContentType.Html);
     }
 }

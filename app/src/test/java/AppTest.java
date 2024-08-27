@@ -40,7 +40,6 @@ public class AppTest {
         MockResponse mockResponse = new MockResponse().setResponseCode(200).setBody(readResourceFile("example.html"));
         mockServer.enqueue(mockResponse);
         testUrl = mockServer.url("/").toString();
-
     }
 
     @AfterAll

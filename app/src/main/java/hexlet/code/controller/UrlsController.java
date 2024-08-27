@@ -42,9 +42,9 @@ public class UrlsController {
     public static void create(Context ctx) throws SQLException {
         var urlStr = ctx.formParam("url");
         try {
-            URI.create(urlStr).toURL();
-            var uri = URI.create(urlStr);
-            var urlResultStr = uri.getScheme() + "://" + uri.getHost();
+            var url = URI.create(urlStr).toURL();
+            //var urlResultStr = uri.getScheme() + "://" + uri.getAuthority();
+            var urlResultStr = url.getProtocol() + "://" + url.getAuthority();
             if (UrlRepository.exist(urlResultStr)) {
                 setSessionAttribute(ctx, "Error", "Страница уже существует!");
                 ctx.redirect(NamedRoutes.mainPath());
