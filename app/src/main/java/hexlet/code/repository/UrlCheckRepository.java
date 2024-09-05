@@ -81,7 +81,7 @@ public class UrlCheckRepository extends BaseRepository {
     }
 
     public static HashMap<Long, UrlCheck> getLastChecks() throws SQLException {
-        var sql = "SELECT distinct on (url_id) * FROM url_checks order by id desc";
+        var sql = "SELECT distinct on (url_id) * FROM url_checks order by id, url_id desc";
         try (var conn = dataSource.getConnection();
              var stmt = conn.prepareStatement(sql)) {
             var resultSet = stmt.executeQuery();
