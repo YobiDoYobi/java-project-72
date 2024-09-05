@@ -73,7 +73,6 @@ public class UrlRepository extends BaseRepository {
                 var url = new Url(name, createdAt);
                 url.setId(id);
                 url.setCreatedAt(createdAt);
-                url.setLastCheck(UrlCheckRepository.getLastCheck(id).orElse(null));
                 result.add(url);
             }
             return result;

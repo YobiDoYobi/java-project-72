@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,11 +60,10 @@ public class UrlCheckRepository extends BaseRepository {
 
     public static Optional<UrlCheck> getLastCheck(Long urlId) throws SQLException {
         var sql = "SELECT * FROM url_checks WHERE url_id = ? "
-                + "AND id = (SELECT MAX(id) FROM url_checks WHERE url_id = ?)";
+                + "ORDER BY created_at DESC LIMIT 1";
         try (var conn = dataSource.getConnection();
              var stmt = conn.prepareStatement(sql)) {
             stmt.setLong(1, urlId);
-            stmt.setLong(2, urlId);
             var resultSet = stmt.executeQuery();
 
             if (resultSet.next()) {
@@ -77,6 +77,27 @@ public class UrlCheckRepository extends BaseRepository {
                 return Optional.of(urlCheckTemp);
             }
             return Optional.empty();
+        }
+    }
+
+    public static HashMap<Long, UrlCheck> getLastChecks() throws SQLException {
+        var sql = "SELECT distinct on (url_id) * FROM url_checks order by id desc";
+        try (var conn = dataSource.getConnection();
+             var stmt = conn.prepareStatement(sql)) {
+            var resultSet = stmt.executeQuery();
+            HashMap<Long, UrlCheck> result = new HashMap<>();
+            while (resultSet.next()) {
+                var urlCheckTemp = new UrlCheck();
+                urlCheckTemp.setId(resultSet.getLong("id"));
+                urlCheckTemp.setUrlId(resultSet.getLong("url_id"));
+                urlCheckTemp.setStatusCode(resultSet.getInt("status_code"));
+                urlCheckTemp.setTitle(resultSet.getString("title"));
+                urlCheckTemp.setH1(resultSet.getString("h1"));
+                urlCheckTemp.setDescription(resultSet.getString("description"));
+                urlCheckTemp.setCreatedAt(resultSet.getTimestamp("created_at").toLocalDateTime());
+                result.put(urlCheckTemp.getUrlId(), urlCheckTemp);
+            }
+            return result;
         }
     }
 }

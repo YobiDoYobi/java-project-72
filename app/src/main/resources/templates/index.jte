@@ -29,13 +29,13 @@ content = @`
                                 <a href="${NamedRoutes.urlPath(url.getId())}">${url.getName()}</a>
                             </td>
                             <td>
-                                @if(url.getLastCheck() != null)
-                                    ${url.getLastCheck().getCreatedAt().toString()}
+                                @if(page.getUrlCheckMap().containsKey(url.getId()))
+                                    ${page.getUrlCheckMap().get(url.getId()).getCreatedAt().toString()}
                                 @endif
                             </td>
                             <td>
-                                @if(url.getLastCheck() != null)
-                                    ${url.getLastCheck().getStatusCode()}
+                                @if(page.getUrlCheckMap().containsKey(url.getId()))
+                                    ${page.getUrlCheckMap().get(url.getId()).getStatusCode()}
                                 @endif
 
                             </td>

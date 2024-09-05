@@ -13,7 +13,6 @@ public final class Url {
     private Long id;
     private String name;
     private LocalDateTime createdAt;
-    private UrlCheck lastCheck;
 
     public Url(String name, LocalDateTime createdAt) {
         this.name = name;

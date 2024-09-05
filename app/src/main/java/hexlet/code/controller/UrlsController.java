@@ -24,7 +24,8 @@ import static io.javalin.rendering.template.TemplateUtil.model;
 public class UrlsController {
     public static void index(Context ctx) throws SQLException {
         var urls = UrlRepository.getEntities();
-        var page = new UrlsPage(urls);
+        var urlChecks = UrlCheckRepository.getLastChecks();
+        var page = new UrlsPage(urls, urlChecks);
         consumeSessionAttribute(page, ctx);
         ctx.render("index.jte", model("page", page));
     }
