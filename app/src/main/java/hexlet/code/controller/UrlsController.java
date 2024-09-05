@@ -71,7 +71,7 @@ public class UrlsController {
         var url = UrlRepository.find(Long.valueOf(urlId));
         var urlSring = url.get().getName();
         Unirest.config().reset();
-        Unirest.config().connectTimeout(1000);
+        Unirest.config().connectTimeout(30000);
         try {
             var responseHttp = Unirest.get(urlSring).asString();
             String body = responseHttp.getBody();
